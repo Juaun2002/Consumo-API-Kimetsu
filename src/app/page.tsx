@@ -2,6 +2,7 @@
 
 // Exemplo em um arquivo de página: /pages/pokedex.tsx
 import { useState, useMemo, useCallback } from "react";
+import Image from "next/image";
 import { usePokemonList, searchInPokemonList, Pokemon } from "../api/hooks";
 
 export default function PokedexPage() {
@@ -67,13 +68,19 @@ export default function PokedexPage() {
               onClick={() => setSelectedIndex(index)}
               className="bg-white border border-gray-200 rounded-lg p-4 text-center shadow-md cursor-pointer transition-transform duration-200 ease-in-out hover:scale-105 hover:shadow-lg"
             >
-              <img src={pokemon.imageUrl} alt={`Imagem do ${pokemon.name}`} className="w-24 h-24 mx-auto" />
+              <Image
+                src={pokemon.imageUrl}
+                alt={`Imagem do ${pokemon.name}`}
+                className="w-24 h-24 mx-auto"
+                width={96}
+                height={96}
+              />
               <p className="capitalize mt-2 font-bold text-gray-700">{pokemon.name}</p>
             </div>
           ))}
         </div>
       ) : (
-        <p className="text-center text-gray-500">Nenhum Pokémon encontrado com o termo "{searchTerm}".</p>
+        <p className="text-center text-gray-500">Nenhum Pokémon encontrado com o termo &quot;{searchTerm}&quot;.</p>
       )}
 
       {selectedPokemon && (
@@ -126,7 +133,13 @@ function PokemonModal({ pokemon, onClose, onNext, onPrevious, showNavigation }: 
         >&times;</button>
         
         <h2 className="capitalize text-2xl font-bold mt-0 mb-4 text-gray-800">{pokemon.name}</h2>
-        <img src={pokemon.imageUrl} alt={`Imagem do ${pokemon.name}`} className="w-32 h-32 mx-auto" />
+        <Image
+          src={pokemon.imageUrl}
+          alt={`Imagem do ${pokemon.name}`}
+          className="w-32 h-32 mx-auto"
+          width={128}
+          height={128}
+        />
         
         <p className="my-2 text-gray-700"><strong>ID:</strong> #{pokemon.id}</p>
         <p className="my-2 text-gray-700"><strong>Tipo(s):</strong> {pokemon.types.map(t => <span key={t.type.name} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 capitalize">{t.type.name}</span>)}</p>
